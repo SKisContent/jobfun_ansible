@@ -1,0 +1,22 @@
+---
+- name: Delete directory
+  ansible.builtin.file:
+    state: absent
+    path: "/home/ubuntu/JobFun/"
+
+- name: Clone from repo
+  ansible.builtin.git:
+    repo: https://github.com/skiscontent/JobFun.git
+    version: staging
+    dest: /home/ubuntu/JobFun
+    depth: 1
+
+- name: Delete unwanted files
+  ansible.builtin.file:
+    state: absent
+    path: "/home/ubuntu/JobFun/{{ item }}"
+  with_items:
+    - .git
+    - .gitignore
+    - LICENSE
+    - README.md

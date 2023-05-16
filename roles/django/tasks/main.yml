@@ -1,0 +1,21 @@
+---
+- name: Requirements
+  ansible.builtin.pip:
+    requirements: /var/www/JobFun/requirements.txt
+    virtualenv: "{{ python_path }}"
+
+- name: Migrate
+  community.general.django_manage:
+    project_path: /var/www/JobFun
+    settings: jobfun.settings
+    pythonpath: /var/www/JobFun/jobfun/settings
+    virtualenv: "{{ python_path }}"
+    command: "migrate"
+
+- name: Static files
+  community.general.django_manage:
+    project_path: /var/www/JobFun
+    settings: jobfun.settings
+    pythonpath: /var/www/JobFun/jobfun/settings
+    virtualenv: "{{ python_path }}"
+    command: "collectstatic -v 0 --noinput --clear"

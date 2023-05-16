@@ -1,0 +1,23 @@
+---
+# Play that deploys the Jobfun application
+- name: Deploy
+  hosts: staging
+  vars_files:
+    - vars.yaml
+
+  roles:
+    - git
+    - role: maintenance
+      become: true
+      become_user: jobfun
+      vars:
+        mm_state: "on"
+    - role: django
+      become: true
+      become_user: jobfun
+    - copy
+    - role: maintenance
+      become: true
+      become_user: jobfun
+      vars:
+        mm_state: "off"

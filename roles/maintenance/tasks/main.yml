@@ -1,0 +1,8 @@
+---
+- name: "Maintenance Mode {{ mm_state }}"
+  community.general.django_manage:
+    project_path: /var/www/JobFun
+    settings: jobfun.settings
+    pythonpath: "{{ application_directory}}/settings"
+    virtualenv: "{{ python_path }}"
+    command: "maintenance_mode {{ mm_state }}"

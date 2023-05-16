@@ -1,0 +1,28 @@
+---
+- name: Copy files
+  become: true
+  ansible.builtin.copy:
+    src: /home/ubuntu/JobFun/
+    remote_src: true
+    dest: "{{ deployment_directory }}"
+    owner: www-data
+    group: www-data
+    mode: '0775'
+
+- name: "Find pycache directories"
+  ansible.builtin.find:
+    paths: "{{ deployment_directory }}/jobfun"
+    patterns: "__pycache__"
+    file_type: directory
+    recurse: true
+  register: pycache_directories
+
+- name: delete the directories
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ pycache_directories.files }}"
+
+# - name: find and delete pyc files
+#   ansible.builtin.command: "find {{ deployment_directory }}/jobfun -name "*.pyc" -type f -delete"
+  

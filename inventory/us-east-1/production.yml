@@ -1,0 +1,8 @@
+---
+jobfun:
+  children:
+    production:
+      hosts:
+        jobfun-production.com:
+          ansible_user: ubuntu
+          ansible_ssh_private_key_file: /Users/skiscontent/.ssh/jobfun-production.pem
